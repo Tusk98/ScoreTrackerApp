@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ScoreTrackerApp.iml" filepath="$PROJECT_DIR$/ScoreTrackerApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/azureclientlib/azureclientlib.iml" filepath="$PROJECT_DIR$/azureclientlib/azureclientlib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/azuremobilesdk/azuremobilesdk.iml" filepath="$PROJECT_DIR$/azuremobilesdk/azuremobilesdk.iml" />
     </modules>
   </component>
 </project>
