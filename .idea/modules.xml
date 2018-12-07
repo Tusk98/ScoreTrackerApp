@@ -3,8 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ScoreTrackerApp.iml" filepath="$PROJECT_DIR$/ScoreTrackerApp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ScoreTrackerLib/ScoreTrackerLib.iml" filepath="$PROJECT_DIR$/ScoreTrackerLib/ScoreTrackerLib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ScoreTrackerLib/azureclientlib/ScoreTrackerLib-azureclientlib.iml" filepath="$PROJECT_DIR$/ScoreTrackerLib/azureclientlib/ScoreTrackerLib-azureclientlib.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
