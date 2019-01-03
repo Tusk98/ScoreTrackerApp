@@ -19,6 +19,7 @@ DROP TABLE IF EXISTS ScoreEntry;
 DROP TABLE IF EXISTS TournamentList;
 
 
+
 CREATE TABLE IF NOT EXISTS `admin` (
   `Admin_ID` int(11) NOT NULL AUTO_INCREMENT,
   `User_Name` varchar(50) NOT NULL,

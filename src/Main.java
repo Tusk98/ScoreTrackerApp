@@ -1,29 +1,27 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class Main {
 
-    private static final String USERNAME = "dbuser";
-    private static final String PASSWORD = "dbpassword";
-    private static final String CONN_STRING = "jdbc:mysql://localhost/scoretracker";
 
     public static void main (String [] args) throws SQLException {
-        Connection conn = null;
 
-        try {
-            conn = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
+
+        try (
+                Connection conn = DBUtil.getConnection();
+                Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                ResultSet rs = stmt.executeQuery("SELECT User_ID FROM membershiplist");
+            ){
+
+            // Move cursor to end of resultset
+            rs.last();
+            System.out.println("Number of rows: " + rs.getRow());
+
+
             System.out.println("Connected.");
 
         } catch (SQLException e) {
-            System.err.println(e);
-        } finally {
-            if (conn != null) {
-                conn.close();
-            }
+            DBUtil.processException(e);
         }
-
-
 
     }
 }
