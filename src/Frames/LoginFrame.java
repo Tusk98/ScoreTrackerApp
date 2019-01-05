@@ -14,14 +14,16 @@ import java.awt.event.ActionEvent;
 public class LoginFrame extends JPanel{
 
     private JFrame mainOptionMenu;
-    private JFrame usersListMenu;
-    private JButton meme;
+    private JTextField txtUsername;
+    private JPasswordField txtPassword;
+    String username = null;
+    String password = null;
 
     public LoginFrame() {
         initialize();
     }
 
-    public static void beginApp() throws SQLException {
+    public static void main(String[] args) throws SQLException {
         LoginFrame.startUpMenu();
     }
 
@@ -43,72 +45,82 @@ public class LoginFrame extends JPanel{
     private void initialize() {
         mainOptionMenu = new JFrame();
         mainOptionMenu.setTitle("ScoreKeeper");
-        mainOptionMenu.setBounds(100, 100, 500, 300);
+        mainOptionMenu.setBounds(100, 100, 650, 500);
         mainOptionMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainOptionMenu.getContentPane().setLayout(null);
 
-        JLabel label = new JLabel("Main menu:");
-        label.setFont(new Font("Tahoma", Font.PLAIN, 22));
+        Font typeFont = new Font("SansSerif", Font.BOLD, 20);
+
+        JLabel label = new JLabel("Login menu:");
+        label.setFont(new Font("Tahoma", Font.PLAIN, 30));
         label.setBounds(15, 16, 415, 33);
         mainOptionMenu.add(label);
 
-        JTextField txtUsername = new JTextField("Username");
-        txtUsername.setBounds(54,8,166,26);
+        //Username label
+        JLabel userLabel = new JLabel("Username:");
+        userLabel.setFont(new Font("Tahoma", Font.PLAIN, 22));
+        userLabel.setBounds(50, 66, 415, 33);
+        mainOptionMenu.add(userLabel);
+
+        //Username text field
+        txtUsername = new JTextField(50);
+        txtUsername.setBounds(50,100,500,35);
+        txtUsername.setFont(typeFont);
         mainOptionMenu.getContentPane().add(txtUsername);
 
-        // Button to go to new JFrame to view the list of users
-        JButton usersListButton = new JButton("View Users");
-        usersListButton.setFont(new Font("Aria", Font.PLAIN, 24));
-        usersListButton.setBounds(50, 60, 400, 30);
-        usersListButton.addActionListener(new ActionListener() {
+        //Password text field
+        JLabel passLabel = new JLabel("Password:");
+        passLabel.setFont(new Font("Tahoma", Font.PLAIN, 22));
+        passLabel.setBounds(50, 166, 415, 33);
+        mainOptionMenu.add(passLabel);
+
+        //Password text field
+        txtPassword = new JPasswordField(50);
+        txtPassword.setBounds(50, 200, 500,35);
+        mainOptionMenu.getContentPane().add(txtPassword);
+
+
+        // Login button
+        JButton mainMenuBtn = new JButton("Login");
+        mainMenuBtn.setFont(new Font("Aria", Font.PLAIN, 24));
+        mainMenuBtn.setBounds(250, 300, 100, 30);
+        mainMenuBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                mainOptionMenu.dispose();
-                new MembershipFrame();
+                // Set username variables to what's in fields, check DB for matching words
+                getUsername();
+                getPassword();
 
+                // Query DB for matching membership
+                boolean matched = DBUtil.checkCredentials(username, password);
 
+                // Show message for successful or failed login
+                if (matched) {
+                    JOptionPane.showMessageDialog(mainOptionMenu,
+                            "Successful Login",
+                            "Login",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    mainOptionMenu.dispose();
+
+                } else {
+                    JOptionPane.showMessageDialog(mainOptionMenu,
+                            "Invalid username or password",
+                            "Login",
+                            JOptionPane.ERROR_MESSAGE);
+                    txtPassword.setText("");
+                }
             }
         });
-        mainOptionMenu.getContentPane().add(usersListButton);
-
-        //View the list of users button
-
-
-
-
-
-
-
-        /* Code to create another pane
-         *
-         Double Click the Login Button in the NETBEANS or add the Event Listener on Click Event (ActionListener)
-
-         btnLogin.addActionListener(new ActionListener()
-         {
-         public void actionPerformed(ActionEvent e) {
-         this.setVisible(false);
-         new FrmMain().setVisible(true); // Main Form to show after the Login Form..
-         }
-         });
-         */
-
+        mainOptionMenu.getContentPane().add(mainMenuBtn);
 
     }
 
-    public static void dbConnect() {
-        try (
-                Connection conn = DBUtil.getConnection();
-                Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-                ResultSet rs = stmt.executeQuery("SELECT * FROM membershiplist");
-        ){
-
-
-            MembershipList.displayData(rs);
-
-            System.out.println("Connected.");
-
-        } catch (SQLException e) {
-            DBUtil.processException(e);
-        }
+    private void getUsername() {
+        username = txtUsername.getText().trim();
     }
+
+    private void getPassword() {
+        password = new String(txtPassword.getPassword());
+    }
+
 
 }
