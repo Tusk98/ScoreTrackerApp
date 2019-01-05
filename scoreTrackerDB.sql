@@ -60,3 +60,6 @@ CREATE TABLE IF NOT EXISTS TournamentList(
 
 INSERT INTO `admin` (`Admin_ID`, `User_Name`, `Password`) VALUES
 (1, 'explorerone', 'password');
+
+INSERT INTO `MembershipList` (User_ID, User_Name, Password) VALUES (1, "henry", "henrypass");
+INSERT INTO `MembershipList` (User_ID, User_Name, Password) VALUES (2, "dio", "theworld");
